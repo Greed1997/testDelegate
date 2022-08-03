@@ -6,9 +6,11 @@
 //
 
 import UIKit
-
+protocol TabNumberDelegate {
+    func setTabNumber() -> Number
+}
 protocol NumberDelegate {
-    func setNumber()
+    func setNumber() -> Number
 }
 
 class FirstViewController: UIViewController {
@@ -29,15 +31,25 @@ class FirstViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let nextVC = segue.destination as? NextViewController else { return }
+        guard let tabBarController = tabBarController as? TabBarViewController else { return }
+        tabBarController.someNumber = someNumber
         nextVC.delegate = self
         nextVC.someNumber = someNumber
     }
 
 }
+extension FirstViewController: TabNumberDelegate {
+    func setTabNumber() -> Number {
+        let newNumber = Number(number: someNumber.number)
+        someNumber = newNumber
+        return newNumber
+    }
+}
 
 extension FirstViewController: NumberDelegate {
-    func setNumber() {
+    func setNumber() -> Number {
         let newNumber = Number(number: someNumber.number + 5)
         someNumber = newNumber
+        return newNumber
     }
 }

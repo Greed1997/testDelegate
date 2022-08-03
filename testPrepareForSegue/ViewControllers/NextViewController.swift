@@ -17,29 +17,30 @@ class NextViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
+        someLabelOne.text = someNumber.description
+        someLabelTwo.text = delegate.setNumber().description
     }
     @IBAction func unwind() {
         dismiss(animated: true)
     }
     
     @IBAction func delegateButtonPressed() {
-        delegate.setNumber()
+        someNumber = delegate.setNumber()
         someLabelTwo.text = someNumber.description
         //dismiss(animated: true)
     }
     
     
 
-    /*
+   
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        guard let firstVC = segue.destination as? FirstViewController else { return }
+        firstVC.someNumber = someNumber
+//        guard let tabBarController = firstVC as? TabBarViewController else { return }
+//        tabBarController.someNumber = someNumber
     }
-    */
+    
 
 }
